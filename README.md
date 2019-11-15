@@ -1,4 +1,4 @@
-# @fuelrats/next-dynamic-router
+# @fuelrats/next-named-routes
 Named routes for Next.js 9's built-in dynamic routing. Inspired by [`next-routes`][next-routes].
 
 ### ⚠ Use of this library is not yet recommended. We are still in testing stages! ⚠
@@ -11,7 +11,7 @@ This library aims to provide a more convenient interface for routing in your Nex
 
 ## Setup
 
-1. Install via: `yarn add @fuelrats/next-dynamic-router` or `npm i @fuelrats/next-dynamic-router`
+1. Install via: `yarn add @fuelrats/next-named-routes` or `npm i @fuelrats/next-named-routes`
 
 2. Structure your `pages` directory for [Next.js dynamic routes][nextdocs-dynamic-routes].
 
@@ -19,7 +19,7 @@ This library aims to provide a more convenient interface for routing in your Nex
     - Note the use of CommonJS import/export syntax here is **required**.
 
 ```javascript
-const routes = require('@fuelrats/next-dynamic-router')
+const routes = require('@fuelrats/next-named-routes')
 
 module.exports = routes()
   // .add() accepts 3 parameters: Name, href, and as.
@@ -99,7 +99,7 @@ All three functions have the same arguments:
 
 ### Using `useRouter` and `withRouter`
 
-`next-dynamic-router` provides wrappers for both the `useRouter` hook and `withRouter` HoC! They are used just like the built in versions.
+`next-named-routes` provides wrappers for both the `useRouter` hook and `withRouter` HoC! They are used just like the built in versions.
 
 ```jsx
 import { useRouter } from '../routes'
@@ -130,7 +130,7 @@ export default withRouter(BlogListTitle)
 
 Coming from `next-routes`? Welcome! While we do not provide the exact same API, it should feel similar in use. If you use route names to resolve routes, then very little work is required to migrate!
 
-This should **NOT** be considered a simple drop-in replacement for `next-routes`. Page routing is handled entirely by Next.js, NOT `next-dynamic-router`. We only provide convienence functions for working with the built-in dynamic router introduced by Next.js 9.
+This should **NOT** be considered a simple drop-in replacement for `next-routes`. Page routing is handled entirely by Next.js, NOT `next-named-routes`. We only provide convienence functions for working with the built-in dynamic router introduced by Next.js 9.
 
 1. Follow setup as above, making adjustments to your `routes.js` file as needed.
 2. remove `next-routes` from your server router. In most cases this just involves removing the `next-routes` handler wrapper, and the library import itself.

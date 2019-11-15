@@ -1,13 +1,13 @@
 {
-  "name": "@fuelrats/next-dynamic-router",
+  "name": "@fuelrats/next-named-routes",
   "version": "1.0.0-alpha.1",
   "description": "Named routes for Next.js dynamic routing",
   "main": "dist",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FuelRats/next-dynamic-router.git"
+    "url": "https://github.com/FuelRats/next-named-routes.git"
   },
-  "homepage": "https://github.com/FuelRats/next-dynamic-router",
+  "homepage": "https://github.com/FuelRats/next-named-routes",
   "author": {
     "name": "Cameron Welter",
     "email": "clapton@fuelrats.com",
@@ -19,7 +19,7 @@
     "prepublishOnly": "npm run build"
   },
   "bugs": {
-    "url": "https://github.com/FuelRats/next-dynamic-router/issues"
+    "url": "https://github.com/FuelRats/next-named-routes/issues"
   },
   "keywords": [
     "react",
