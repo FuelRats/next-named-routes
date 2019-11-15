@@ -13,8 +13,8 @@ import NextRouter, {
 class Route {
   constructor (name, href, as) {
     if (typeof name !== 'string'
-        || (typeof href !== 'string' || typeof href !== 'function')
-        || (as && (typeof as !== 'string' || typeof as !== 'function'))
+        || (typeof href !== 'string' && typeof href !== 'function')
+        || (as && (typeof as !== 'string' && typeof as !== 'function'))
     ) {
       throw new TypeError(`Invalid arguments for route: "${name}"`)
     }
@@ -25,14 +25,14 @@ class Route {
   }
 
   getRouteData (params = {}) {
+    let as = null
     const href = typeof this.href === 'function' ? this.href(params) : this.href
     if (typeof href === 'object' && typeof href.href === 'string') {
       return href
     }
-
     if (typeof href === 'string') {
-      const as = (typeof this.as === 'function' ? this.as(params) : this.as)
-      if (!as || typeof this.as === 'string') {
+      as = (typeof this.as === 'function' ? this.as(params) : this.as)
+      if (!as || typeof as === 'string') {
         return {
           href,
           as,
@@ -40,7 +40,7 @@ class Route {
       }
     }
 
-    throw new Error(`Unable to calculate route data for route ${this.name}`)
+    throw new Error(`Unable to calculate route data for route ${this.name}. href was: ${href}. as was: ${as}`)
   }
 }
 
@@ -51,6 +51,7 @@ class Route {
 class RouteHelper {
   constructor () {
     this.routes = {}
+    this.Route = Route
     this.Link = this.getLink()
     this.Router = this.getRouter()
     this.useRouter = this.getUseRouter()
@@ -63,6 +64,8 @@ class RouteHelper {
     }
 
     this.routes[name] = new Route(name, href, as)
+
+    return this
   }
 
   getLink = (LinkComp = NextLink) => ({
@@ -112,18 +115,24 @@ class RouteHelper {
     switch (typeof route) {
       case 'string':
         if (this.routes[route]) {
-          return this.routes[route](params)
+          return this.routes[route].getRouteData(params)
         }
         if (route.startsWith('/')) {
           return { href: route, as: route }
         }
         throw new Error(`Route name "${route}" is an invalid route.`)
 
+      case 'object':
+        if (route instanceof Route) {
+          return route.getRouteData(params)
+        }
+        throw new Error('Route objects must be an instance of Route')
+
       case 'function':
         return route(params)
 
       default:
-        throw new TypeError(`Route must be of type "[string]" or "[function]". Got "[${typeof route}]".`)
+        throw new TypeError(`Route must be of type "[string]", "[object]", or "[function]". Got "[${typeof route}]".`)
     }
   }
 }
