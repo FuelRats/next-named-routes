@@ -1,7 +1,7 @@
 {
   "name": "@fuelrats/next-named-routes",
   "version": "1.0.0-alpha.1",
-  "description": "Named routes for Next.js dynamic routing",
+  "description": "Named routes API for Next.js dynamic routing",
   "main": "dist",
   "repository": {
     "type": "git",
