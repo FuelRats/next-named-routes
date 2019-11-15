@@ -137,10 +137,10 @@ This should **NOT** be considered a simple drop-in replacement for `next-routes`
     - If you only implemented a custom server for dynamic routing, chances are you could remove it altogether!
 3. remove `next-routes` via `yarn remove next-routes` or `npm r -S next-routes`
 
-### Limitations from `next-routes`
+### Differences between `next-routes`
 - `.add()`'s API differs drastically from `next-routes`. This was done on purpose. We found that using functions which build the `href` and `as` fields from params had greater value than limiting it to a pre-defined pattern.
-- Resolving routes via pre-calculated path strings (e.g. `/blog/1234552`) was too expensive to support in this library. We recommend using route names anyway. (even when using `next-routes`!)
-- Using the `Route` prop/argument as an alias for `href` will still work, but it will not attempt to resolve your path to a defined route.
+- Resolving routes via pre-calculated path strings (e.g. `/blog/1234552`) was too expensive to support in this library. We recommend using route names anyway (even when using `next-routes`!).
+- Using the `Route` prop/argument as an alias for `href` will still work, but the library will **not** attempt to resolve your path to a defined route.
 
 [next-routes]: https://github.com/fridays/next-routes
 [nextdocs-dynamic-routes]: https://github.com/zeit/next.js#dynamic-routing
