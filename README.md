@@ -1,8 +1,6 @@
 # @fuelrats/next-named-routes
 Named routes for Next.js 9's built-in dynamic routing. Inspired by [`next-routes`][next-routes].
 
-### ⚠ Use of this library is not yet recommended. We are still in testing stages! ⚠
-
 ## Motivation
 
 The current API for routing to dynamic routes is rather cumbersome. As a result, refactoring routes can be costly in larger websites. Small mistakes in writing the `href` and `as` parameters are also very easy to make.
