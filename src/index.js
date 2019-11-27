@@ -1,11 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */// Peer Dependencies
 import React from 'react'
+import hoistNonReactStatics from 'hoist-non-react-statics'
 import NextLink from 'next/link'
 import NextRouter, {
   useRouter as useNextRouter,
-  withRouter as withNextRouter,
 } from 'next/router'
-
 
 
 
@@ -106,9 +105,9 @@ class RouteHelper {
   }
 
   getWithRouter () {
-    return (Component) => withNextRouter(({ router, ...props }) => (
-      <Component {...props} router={this.getRouter(router)} />
-    ))
+    return (Component) => hoistNonReactStatics((props) => (
+      <Component {...props} router={this.Router} />
+    ), Component)
   }
 
   resolveRoute (route, params) {
