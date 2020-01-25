@@ -21,7 +21,7 @@ import * as NextRouter from 'next/router'
 import routes from '@fuelrats/next-named-routes'
 
 // grab what you need!
-const RouterStuff = routes(NextLink, NextRouter)
+const { Link, Router, useRouter, withRouter } = routes(NextLink, NextRouter)
   // .add() accepts 3 parameters: Name, href, and as.
   .add('basic route', '/href/field', '/as/field')
 
@@ -49,8 +49,8 @@ const RouterStuff = routes(NextLink, NextRouter)
 export {
   Link,
   Router,
-  withRouter,
   useRouter,
+  withRouter,
 }
 ```
 

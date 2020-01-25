@@ -2,7 +2,13 @@
 
 ## [unreleased]
 
-## 2.0.0
+## 2.0.2 - 2020-01-25
+* Realized Yarn 2 is a bit weird about prepublish. now we have a 2.0 release :P
+
+## 2.0.1 - 2020-01-25
+* Fix documentation error.
+
+## 2.0.0 - 2020-01-25
 * **BREAKING** Properly respect package boundaries by having the user provide what we need for us. (yay)
     - Refer to the updated example config in `README.md`.
 * Convert to Yarn2 / PnP.
