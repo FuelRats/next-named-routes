@@ -70,6 +70,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       130,
       126,
       125,
+      124,
       122,
       120,
       118,
@@ -129,6 +130,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.8.3"],
             ["@babel/plugin-proposal-class-properties", "virtual:75dcb1994a31162b877a0917bd0f2baaebabc10903c0edc1f96ff4e7ae5ba64d9e4a594e1730c76296ac32dc1cb3c131720f56de62ca8bd0ed991feaae4182ab#npm:7.8.3"],
             ["@babel/preset-env", "virtual:75dcb1994a31162b877a0917bd0f2baaebabc10903c0edc1f96ff4e7ae5ba64d9e4a594e1730c76296ac32dc1cb3c131720f56de62ca8bd0ed991feaae4182ab#npm:7.8.3"],
+            ["@fuelrats/argument-validator-utils", "npm:0.1.1"],
             ["@fuelrats/eslint-config-react", "virtual:75dcb1994a31162b877a0917bd0f2baaebabc10903c0edc1f96ff4e7ae5ba64d9e4a594e1730c76296ac32dc1cb3c131720f56de62ca8bd0ed991feaae4182ab#npm:1.2.5"],
             ["@yarnpkg/pnpify", "virtual:75dcb1994a31162b877a0917bd0f2baaebabc10903c0edc1f96ff4e7ae5ba64d9e4a594e1730c76296ac32dc1cb3c131720f56de62ca8bd0ed991feaae4182ab#npm:2.0.0-rc.16"],
             ["babel-eslint", "virtual:75dcb1994a31162b877a0917bd0f2baaebabc10903c0edc1f96ff4e7ae5ba64d9e4a594e1730c76296ac32dc1cb3c131720f56de62ca8bd0ed991feaae4182ab#npm:10.0.3"],
@@ -1374,6 +1376,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"
         }]
       ]],
+      ["@fuelrats/argument-validator-utils", [
+        ["npm:0.1.1", {
+          "packageLocation": "./.yarn/cache/@fuelrats-argument-validator-utils-npm-0.1.1-5fedab83a1-1.zip/node_modules/@fuelrats/argument-validator-utils/",
+          "packageDependencies": [
+            ["@fuelrats/argument-validator-utils", "npm:0.1.1"]
+          ],
+          "linkType": "HARD"
+        }]
+      ]],
       ["@fuelrats/eslint-config", [
         ["virtual:a7a323ca91aa5babff5d96f683d866d1c486a74dc2390764e0171990cf03863850d4aeb9a0f3d1bee1ea7a61ed896b4254bd82dab21b6299d1d4c4bf1c0ec752#npm:1.2.2", {
           "packageLocation": "./.yarn/$$virtual/@fuelrats-eslint-config-virtual-041801143b/0/cache/@fuelrats-eslint-config-npm-1.2.2-1c89bda9f5-1.zip/node_modules/@fuelrats/eslint-config/",
@@ -1431,6 +1442,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.8.3"],
             ["@babel/plugin-proposal-class-properties", "virtual:75dcb1994a31162b877a0917bd0f2baaebabc10903c0edc1f96ff4e7ae5ba64d9e4a594e1730c76296ac32dc1cb3c131720f56de62ca8bd0ed991feaae4182ab#npm:7.8.3"],
             ["@babel/preset-env", "virtual:75dcb1994a31162b877a0917bd0f2baaebabc10903c0edc1f96ff4e7ae5ba64d9e4a594e1730c76296ac32dc1cb3c131720f56de62ca8bd0ed991feaae4182ab#npm:7.8.3"],
+            ["@fuelrats/argument-validator-utils", "npm:0.1.1"],
             ["@fuelrats/eslint-config-react", "virtual:75dcb1994a31162b877a0917bd0f2baaebabc10903c0edc1f96ff4e7ae5ba64d9e4a594e1730c76296ac32dc1cb3c131720f56de62ca8bd0ed991feaae4182ab#npm:1.2.5"],
             ["@yarnpkg/pnpify", "virtual:75dcb1994a31162b877a0917bd0f2baaebabc10903c0edc1f96ff4e7ae5ba64d9e4a594e1730c76296ac32dc1cb3c131720f56de62ca8bd0ed991feaae4182ab#npm:2.0.0-rc.16"],
             ["babel-eslint", "virtual:75dcb1994a31162b877a0917bd0f2baaebabc10903c0edc1f96ff4e7ae5ba64d9e4a594e1730c76296ac32dc1cb3c131720f56de62ca8bd0ed991feaae4182ab#npm:10.0.3"],

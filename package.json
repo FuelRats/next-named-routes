@@ -50,6 +50,7 @@
     "eslint-plugin-react-hooks": "^2.3.0"
   },
   "dependencies": {
+    "@fuelrats/argument-validator-utils": "^0.1.1",
     "hoist-non-react-statics": "^3.3.2",
     "react": "^16.12.0"
   }
