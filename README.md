@@ -14,12 +14,14 @@ This library aims to provide a more convenient interface for routing in your Nex
 2. Structure your `pages` directory for [Next.js dynamic routes][nextdocs-dynamic-routes].
 
 3. Create a `routes.js` file in your project similar to this:
-    - Note the use of CommonJS import/export syntax here is **required**.
 
 ```javascript
-const routes = require('@fuelrats/next-named-routes')
+import NextLink from 'next/link'
+import * as NextRouter from 'next/router'
+import routes from '@fuelrats/next-named-routes'
 
-module.exports = routes()
+// grab what you need!
+const RouterStuff = routes(NextLink, NextRouter)
   // .add() accepts 3 parameters: Name, href, and as.
   .add('basic route', '/href/field', '/as/field')
 
@@ -42,6 +44,14 @@ module.exports = routes()
       as,
     }
   })
+
+// export whatever you need!
+export {
+  Link,
+  Router,
+  withRouter,
+  useRouter,
+}
 ```
 
 4. Use `<Link />` and `Router` in your application!
@@ -135,10 +145,16 @@ This should **NOT** be considered a simple drop-in replacement for `next-routes`
     - If you only implemented a custom server for dynamic routing, chances are you could remove it altogether!
 3. remove `next-routes` via `yarn remove next-routes` or `npm r -S next-routes`
 
+
 ### Differences between `next-routes`
 - `.add()`'s API differs drastically from `next-routes`. This was done on purpose. We found that using functions which build the `href` and `as` fields from params had greater value than limiting it to a pre-defined pattern.
 - Resolving routes via pre-calculated path strings (e.g. `/blog/1234552`) was too expensive to support in this library. We recommend using route names anyway (even when using `next-routes`!).
 - Using the `Route` prop/argument as an alias for `href` will still work, but the library will **not** attempt to resolve your path to a defined route.
+- Unline `next-routes`, `next-named-routes` does not abuse module importing and respects package boundaries. As a result, `NextLink` and all exports of `NextRouter` must be manually provided to `next-named-routes`. You can see this in action in the example config above.
+
+
+
+
 
 [next-routes]: https://github.com/fridays/next-routes
 [nextdocs-dynamic-routes]: https://github.com/zeit/next.js#dynamic-routing

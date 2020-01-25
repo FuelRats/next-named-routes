@@ -1,22 +1,14 @@
-/* eslint-disable import/no-extraneous-dependencies */// Peer Dependencies
-import React from 'react'
 import hoistNonReactStatics from 'hoist-non-react-statics'
-import NextLink from 'next/link'
-import NextRouter, {
-  useRouter as useNextRouter,
-} from 'next/router'
+import React from 'react'
+import { validateRoute, validateRouteHelper, validateResolveRoute } from './validate'
+
 
 
 
 
 class Route {
   constructor (name, href, as) {
-    if (typeof name !== 'string'
-        || (typeof href !== 'string' && typeof href !== 'function')
-        || (as && (typeof as !== 'string' && typeof as !== 'function'))
-    ) {
-      throw new TypeError(`Invalid arguments for route: "${name}"`)
-    }
+    validateRoute({ name, href, as })
 
     this.name = name
     this.href = href
@@ -25,10 +17,12 @@ class Route {
 
   getRouteData (params = {}) {
     let as = null
+
     const href = typeof this.href === 'function' ? this.href(params) : this.href
     if (typeof href === 'object' && typeof href.href === 'string') {
       return href
     }
+
     if (typeof href === 'string') {
       as = (typeof this.as === 'function' ? this.as(params) : this.as)
       if (!as || typeof as === 'string') {
@@ -47,8 +41,10 @@ class Route {
 
 
 
-class RouteHelper {
+const routes = (NextLink, NextRouter) => class RouteHelper {
   constructor () {
+    validateRouteHelper({ NextLink, NextRouter })
+
     this.routes = {}
     this.Route = Route
     this.Link = this.getLink()
@@ -67,7 +63,7 @@ class RouteHelper {
     return this
   }
 
-  getLink = (LinkComp = NextLink) => ({
+  getLink = () => ({
     route,
     params,
     children,
@@ -80,28 +76,30 @@ class RouteHelper {
     }
 
     return (
-      <LinkComp {...linkProps} {...routeData}>
+      <NextLink {...linkProps} {...routeData}>
         {children}
-      </LinkComp>
+      </NextLink>
     )
   }
 
-  getRouter (target = NextRouter) {
+  getRouter () {
+    const Router = NextRouter.default
+
     const wrapMethod = (method) => (route, params, ...restArgs) => {
       const { href, as } = this.resolveRoute(route, params)
 
-      return target[method](href, as, ...restArgs)
+      return Router[method](href, as, ...restArgs)
     }
 
-    target.pushRoute = wrapMethod('push')
-    target.replaceRoute = wrapMethod('replace')
-    target.prefetchRoute = wrapMethod('prefetch')
+    Router.pushRoute = wrapMethod('push')
+    Router.replaceRoute = wrapMethod('replace')
+    Router.prefetchRoute = wrapMethod('prefetch')
 
-    return target
+    return Router
   }
 
   getUseRouter () {
-    return () => this.getRouter(useNextRouter())
+    return () => this.getRouter(NextRouter.useRouter())
   }
 
   getWithRouter () {
@@ -111,28 +109,33 @@ class RouteHelper {
   }
 
   resolveRoute (route, params) {
+    const validator = validateResolveRoute({ route })
+
     switch (typeof route) {
       case 'string':
         if (this.routes[route]) {
           return this.routes[route].getRouteData(params)
         }
+
         if (route.startsWith('/')) {
           return { href: route, as: route }
         }
-        throw new Error(`Route name "${route}" is an invalid route.`)
+
+        validator.assert('route').throwCustom('to be member of `routes` or a valid path name', route)
+        break
 
       case 'object':
-        if (route instanceof Route) {
-          return route.getRouteData(params)
-        }
-        throw new Error('Route objects must be an instance of Route')
+        validator.assert('route').toBeInstaceOf(Route)
+        return route.getRouteData(params)
 
       case 'function':
         return route(params)
 
       default:
-        throw new TypeError(`Route must be of type "[string]", "[object]", or "[function]". Got "[${typeof route}]".`)
+        break
     }
+
+    return null
   }
 }
 
@@ -140,4 +143,4 @@ class RouteHelper {
 
 
 
-module.exports = (...opts) => new RouteHelper(...opts)
+export default routes
