@@ -2,6 +2,10 @@
 
 ## [unreleased]
 
+## 2.1.0 - 2020-01-26
+* Ensure route helper class instance is created properly.
+* Export Route class
+
 ## 2.0.4 - 2020-01-26
 * Remove next babel preset.
 * Use React.createElement over JSX since we only need it in 2 spots

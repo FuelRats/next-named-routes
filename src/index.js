@@ -41,12 +41,11 @@ class Route {
 
 
 
-const routes = (NextLink, NextRouter) => class RouteHelper {
+const routes = (NextLink, NextRouter) => new (class RouteHelper {
   constructor () {
     validateRouteHelper({ NextLink, NextRouter })
 
     this.routes = {}
-    this.Route = Route
     this.Link = this.getLink()
     this.Router = this.getRouter()
     this.useRouter = this.getUseRouter()
@@ -145,10 +144,13 @@ const routes = (NextLink, NextRouter) => class RouteHelper {
 
     return null
   }
-}
+})()
 
 
 
 
 
 export default routes
+export {
+  Route,
+}
