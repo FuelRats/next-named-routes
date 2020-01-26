@@ -2,6 +2,10 @@
 
 ## [unreleased]
 
+## 2.0.4 - 2020-01-26
+* Remove next babel preset.
+* Use React.createElement over JSX since we only need it in 2 spots
+
 ## 2.0.3 - 2020-01-26
 * Hopefully fix this for real this time?
 
