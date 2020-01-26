@@ -1,6 +1,6 @@
 {
   "name": "@fuelrats/next-named-routes",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Named routes API for Next.js dynamic routing",
   "main": "dist/index.js",
   "repository": {
@@ -16,7 +16,7 @@
   "scripts": {
     "lint": "yarn eslint .",
     "build": "rm -rf dist && yarn babel src -d dist",
-    "publish": "yarn build && yarn npm publish"
+    "prepublish": "yarn build"
   },
   "bugs": {
     "url": "https://github.com/FuelRats/next-named-routes/issues"
