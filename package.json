@@ -29,7 +29,6 @@
   ],
   "license": "BSD-3-Clause",
   "peerDependencies": {
-    "next": ">=9",
     "react": "^16.6.0",
     "react-dom": "^16.6.0"
   },
@@ -47,8 +46,7 @@
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.0",
-    "eslint-plugin-react-hooks": "^2.3.0",
-    "next": "^9.2.1"
+    "eslint-plugin-react-hooks": "^2.3.0"
   },
   "dependencies": {
     "@fuelrats/argument-validator-utils": "^0.1.2",
