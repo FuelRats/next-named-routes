@@ -1,6 +1,6 @@
 {
   "name": "@fuelrats/next-named-routes",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Named routes API for Next.js dynamic routing",
   "main": "dist/index.js",
   "repository": {
@@ -49,7 +49,7 @@
     "eslint-plugin-react-hooks": "^2.3.0"
   },
   "dependencies": {
-    "@fuelrats/argument-validator-utils": "^0.1.2",
+    "@fuelrats/argument-validator-utils": "^0.1.3",
     "hoist-non-react-statics": "^3.3.2",
     "react": "^16.12.0"
   }

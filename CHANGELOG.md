@@ -2,6 +2,9 @@
 
 ## [unreleased]
 
+## 2.1.1 - 2020-01-26
+* update validator utils, since it was released with some old garbage code.
+
 ## 2.1.0 - 2020-01-26
 * Ensure route helper class instance is created properly.
 * Export Route class
