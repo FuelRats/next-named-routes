@@ -2,6 +2,9 @@
 
 ## [unreleased]
 
+## 2.1.2 - 2020-01-26
+* Revert from Yarn2/PnP. too new a technology :P
+
 ## 2.1.1 - 2020-01-26
 * update validator utils, since it was released with some old garbage code.
 
