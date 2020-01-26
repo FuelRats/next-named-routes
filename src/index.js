@@ -75,10 +75,13 @@ const routes = (NextLink, NextRouter) => class RouteHelper {
       routeData = this.resolveRoute(route, params)
     }
 
-    return (
-      <NextLink {...linkProps} {...routeData}>
-        {children}
-      </NextLink>
+    return React.createElement(
+      NextLink,
+      {
+        ...linkProps,
+        ...routeData,
+      },
+      children,
     )
   }
 
@@ -103,9 +106,14 @@ const routes = (NextLink, NextRouter) => class RouteHelper {
   }
 
   getWithRouter () {
-    return (Component) => hoistNonReactStatics((props) => (
-      <Component {...props} router={this.Router} />
-    ), Component)
+    return (Component) => hoistNonReactStatics(
+      ({ children, ...props }) => React.createElement(
+        Component,
+        { ...props, router: this.Router },
+        children,
+      ),
+      Component,
+    )
   }
 
   resolveRoute (route, params) {
