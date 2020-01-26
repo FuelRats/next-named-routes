@@ -1420,10 +1420,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fuelrats/argument-validator-utils@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@fuelrats/argument-validator-utils@npm:0.1.1"
-  checksum: eabfe9552457b61560e52193c26afec77522a83742086201199193b72a1a287edf5c74b75f181b88291dcdc8e6495c4a4072d4aca05bb495e4b387bb92fab103
+"@fuelrats/argument-validator-utils@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@fuelrats/argument-validator-utils@npm:0.1.2"
+  checksum: 9ee15091402c1c79b5c53ea839a4377035991736994977ccd05e33f2f5f77cea2f3c2aa27d80930072b16e5b5e7dd7485c6899c4b868923b5ea7b058552c47cc
   languageName: node
   linkType: hard
 
@@ -1467,7 +1467,7 @@ __metadata:
     "@babel/core": ^7.8.3
     "@babel/plugin-proposal-class-properties": ^7.8.3
     "@babel/preset-env": ^7.8.3
-    "@fuelrats/argument-validator-utils": ^0.1.1
+    "@fuelrats/argument-validator-utils": ^0.1.2
     "@fuelrats/eslint-config-react": ^1.2.5
     "@yarnpkg/pnpify": ^2.0.0-rc.16
     babel-eslint: ^10.0.3

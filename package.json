@@ -1,6 +1,6 @@
 {
   "name": "@fuelrats/next-named-routes",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Named routes API for Next.js dynamic routing",
   "main": "dist/index.js",
   "repository": {
@@ -14,8 +14,8 @@
     "url": "https://github.com/UncleClapton"
   },
   "scripts": {
-    "lint": "eslint .",
-    "build": "rm -rf dist && babel src -d dist",
+    "lint": "yarn eslint .",
+    "build": "rm -rf dist && yarn babel src -d dist",
     "publish": "yarn build && yarn npm publish"
   },
   "bugs": {
@@ -51,7 +51,7 @@
     "next": "^9.2.1"
   },
   "dependencies": {
-    "@fuelrats/argument-validator-utils": "^0.1.1",
+    "@fuelrats/argument-validator-utils": "^0.1.2",
     "hoist-non-react-statics": "^3.3.2",
     "react": "^16.12.0"
   }

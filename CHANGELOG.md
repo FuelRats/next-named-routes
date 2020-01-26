@@ -2,6 +2,9 @@
 
 ## [unreleased]
 
+## 2.0.3 - 2020-01-26
+* Hopefully fix this for real this time?
+
 ## 2.0.2 - 2020-01-25
 * Realized Yarn 2 is a bit weird about prepublish. now we have a 2.0 release :P
 
