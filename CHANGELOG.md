@@ -2,6 +2,11 @@
 
 ## [unreleased]
 
+## 2.2.0 - 2020-01-26
+* Use updated validator lib.
+* add new `setRoutes` function, which accepts an array of route data arrays.
+    - We are leaving this function undocumented for the time being as this API may change in the near future.
+
 ## 2.1.2 - 2020-01-26
 * Revert from Yarn2/PnP. too new a technology :P
 

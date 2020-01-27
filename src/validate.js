@@ -5,27 +5,22 @@ import validate from '@fuelrats/argument-validator-utils'
 
 
 
-const validateRoute = (args) => validate(args)
+export const validateRoute = (args) => validate(args)
   .forClass('Route')
   .assert('name').toExist().toBeOfType('string')
+  .forObject(args.name, 'Route') // Change identifier since `name` is validated
   .assert('href').toExist().toBeOneOfType('string', 'function')
   .assert('as').toBeOneOfType('string', 'function')
 
-const validateRouteHelper = (args) => validate(args)
+export const validateRouteHelper = (args) => validate(args)
   .forClass('RouteHelper')
   .assert('NextLink').toExist()
   .assert('NextRouter').toExist()
+  .assert('routeData').toBeOfType('array')
 
-const validateResolveRoute = (args) => validate(args)
+export const validateResolveRoute = (args, Route) => validate(args)
   .forFunc('resolveRoute')
-  .assert('route').toExist().toBeOneOfType('string', 'object', 'function')
-
-
-
-
-
-export {
-  validateRoute,
-  validateRouteHelper,
-  validateResolveRoute,
-}
+  .assert('route').toExist().or((value) => [
+    value.toBeOneOfType('string', 'function'),
+    value.toBeInstanceOf(Route, 'Route'),
+  ])

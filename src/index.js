@@ -1,6 +1,15 @@
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import React from 'react'
-import { validateRoute, validateRouteHelper, validateResolveRoute } from './validate'
+
+
+
+
+
+import {
+  validateResolveRoute,
+  validateRoute,
+  validateRouteHelper,
+} from './validate'
 
 
 
@@ -41,11 +50,12 @@ class Route {
 
 
 
-const routes = (NextLink, NextRouter) => new (class RouteHelper {
+const routes = (NextLink, NextRouter, routeList) => new (class RouteHelper {
   constructor () {
-    validateRouteHelper({ NextLink, NextRouter })
+    validateRouteHelper({ NextLink, NextRouter, routeList })
 
-    this.routes = {}
+    this.setRoutes(routeList)
+
     this.Link = this.getLink()
     this.Router = this.getRouter()
     this.useRouter = this.getUseRouter()
@@ -58,6 +68,18 @@ const routes = (NextLink, NextRouter) => new (class RouteHelper {
     }
 
     this.routes[name] = new Route(name, href, as)
+
+    return this
+  }
+
+  setRoutes (newRoutes) {
+    this.routes = newRoutes?.reduce(
+      (acc, routeData) => {
+        acc[routeData[0]] = new Route(...routeData)
+        return acc
+      },
+      {}
+    ) ?? {}
 
     return this
   }
@@ -116,7 +138,7 @@ const routes = (NextLink, NextRouter) => new (class RouteHelper {
   }
 
   resolveRoute (route, params) {
-    const validator = validateResolveRoute({ route })
+    const validator = validateResolveRoute({ route }, Route)
 
     switch (typeof route) {
       case 'string':
