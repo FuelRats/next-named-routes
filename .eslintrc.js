@@ -3,5 +3,12 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: '@fuelrats/eslint-config-react',
+  extends: [
+    '@fuelrats/eslint-config',
+    '@fuelrats/eslint-config-react',
+  ],
+  rules: {
+    'jsdoc/require-jsdoc': ['off'],
+    'react/prop-types': ['off'],
+  },
 }

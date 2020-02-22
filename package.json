@@ -15,7 +15,9 @@
   },
   "scripts": {
     "lint": "yarn eslint .",
-    "build": "rm -rf dist && yarn babel src -d dist",
+    "test": "NODE_ENV=testing jest",
+    "test:watch": "yarn test --watchAll",
+    "build": "rm -rf dist && yarn rollup --config",
     "prepublish": "yarn build"
   },
   "bugs": {
@@ -33,23 +35,33 @@
     "react-dom": "^16.6.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.3",
-    "@babel/core": "^7.8.3",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@fuelrats/eslint-config-react": "^1.2.5",
-    "@yarnpkg/pnpify": "^2.0.0-rc.16",
+    "@babel/preset-env": "^7.8.4",
+    "@fuelrats/eslint-config": "^2.0.0",
+    "@fuelrats/eslint-config-react": "^2.0.0",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "babel-eslint": "^10.0.3",
+    "babel-jest": "^25.1.0",
     "eslint": "^6.8.0",
     "eslint-import-resolver-node": "^0.3.3",
     "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsdoc": "^21.0.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.18.0",
-    "eslint-plugin-react-hooks": "^2.3.0"
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.4.0",
+    "jest": "^25.1.0",
+    "jest-extended": "^0.11.5",
+    "next": "^9.2.2",
+    "react-dom": "^16.12.0",
+    "rollup": "^1.31.1",
+    "rollup-plugin-auto-external": "^2.0.0",
+    "rollup-plugin-babel": "^4.3.3"
   },
   "dependencies": {
-    "@fuelrats/argument-validator-utils": "^0.2.0",
+    "@fuelrats/argument-validator-utils": "0.5.0-beta.0",
     "hoist-non-react-statics": "^3.3.2",
     "react": "^16.12.0"
   }
