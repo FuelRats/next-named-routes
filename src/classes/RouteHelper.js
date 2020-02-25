@@ -4,6 +4,7 @@ import React from 'react'
 
 
 
+
 import {
   validateResolveRoute,
   validateRouteHelper,
@@ -11,28 +12,78 @@ import {
 import Route from './Route'
 
 
+const wrapRouter = (target, resolveRoute) => {
+  const wrapMethod = (method) => {
+    return (route, params, ...restArgs) => {
+      const { href, as } = resolveRoute(route, params)
 
+      return target[method](href, as, ...restArgs)
+    }
+  }
+
+  target.pushRoute = wrapMethod('push')
+  target.replaceRoute = wrapMethod('replace')
+  target.prefetchRoute = wrapMethod('prefetch')
+
+  return target
+}
 
 
 const routes = (NextLink, NextRouter, routeManifest) => {
   return new (class RouteHelper {
-    constructor () {
-      validateRouteHelper({ NextLink, NextRouter, routeManifest })
-
-      this.setRoutes(routeManifest)
-
-      this.Link = this.getLink()
-      this.Router = this.getRouter()
-      this.useRouter = this.getUseRouter()
-      this.withRouter = this.getWithRouter()
+    useRouter = () => {
+      return wrapRouter(NextRouter.useRouter(), this.resolveRoute)
     }
 
-    add (name, href, as) {
+    withRouter = (Component) => {
+      return hoistNonReactStatics(
+        ({ children, ...props }) => {
+          return React.createElement(
+            Component,
+            { ...props, router: this.Router },
+            children,
+          )
+        },
+        Component,
+      )
+    }
+
+    Link = (props) => {
+      const {
+        route,
+        params,
+        children,
+        ...linkProps
+      } = props
+      let routeData = {}
+
+      if (route) {
+        routeData = this.resolveRoute(route, params)
+      }
+
+      return React.createElement(
+        NextLink,
+        {
+          ...linkProps,
+          ...routeData,
+        },
+        children,
+      )
+    }
+
+    Router = wrapRouter(NextRouter.default, this.resolveRoute)
+
+    constructor () {
+      validateRouteHelper({ NextLink, NextRouter, routeManifest })
+      this.setRoutes(routeManifest)
+    }
+
+    add (name, href) {
       if (this.routes[name]) {
         throw new Error(`Route "${name}" already exists!`)
       }
 
-      this.routes[name] = new Route(name, href, as)
+      this.routes[name] = new Route(name, href)
 
       return this
     }
@@ -49,99 +100,14 @@ const routes = (NextLink, NextRouter, routeManifest) => {
       return this
     }
 
-    getLink = () => {
-      return (props) => {
-        const {
-          route,
-          params,
-          children,
-          ...linkProps
-        } = props
-        let routeData = {}
-
-        if (route) {
-        /* eslint-disable-next-line react/no-this-in-sfc */// this is the way
-          routeData = this.resolveRoute(route, params)
-        }
-
-        return React.createElement(
-          NextLink,
-          {
-            ...linkProps,
-            ...routeData,
-          },
-          children,
-        )
-      }
-    }
-
-    getRouter () {
-      const Router = NextRouter.default
-
-      const wrapMethod = (method) => {
-        return (route, params, ...restArgs) => {
-          const { href, as } = this.resolveRoute(route, params)
-
-          return Router[method](href, as, ...restArgs)
-        }
-      }
-
-      Router.pushRoute = wrapMethod('push')
-      Router.replaceRoute = wrapMethod('replace')
-      Router.prefetchRoute = wrapMethod('prefetch')
-
-      return Router
-    }
-
-    getUseRouter () {
-      return () => {
-        return this.getRouter(NextRouter.useRouter())
-      }
-    }
-
-    getWithRouter () {
-      return (Component) => {
-        return hoistNonReactStatics(
-          ({ children, ...props }) => {
-            return React.createElement(
-              Component,
-              { ...props, router: this.Router },
-              children,
-            )
-          },
-          Component,
-        )
-      }
-    }
-
     resolveRoute (route, params) {
-      const validator = validateResolveRoute({ route }, Route)
+      validateResolveRoute({ route, params })
 
-      switch (typeof route) {
-        case 'string':
-          if (this.routes[route]) {
-            return this.routes[route].getRouteData(params)
-          }
-
-          if (route.startsWith('/')) {
-            return { href: route, as: route }
-          }
-
-          validator.assert('route').throwCustom('to be member of `routes` or a valid path name', route)
-          break
-
-        case 'object':
-          validator.assert('route').toBeInstaceOf(Route)
-          return route.getRouteData(params)
-
-        case 'function':
-          return route(params)
-
-        default:
-          break
+      if (this.routes[route]) {
+        return this.routes[route].getRouteData(params)
       }
 
-      return null
+      return (new Route('route', route)).getRouteData(params)
     }
   })()
 }
