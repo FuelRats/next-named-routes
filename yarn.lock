@@ -1100,20 +1100,20 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
-"@fuelrats/argument-validator-utils@0.5.0-beta.0":
-  version "0.5.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/argument-validator-utils/-/argument-validator-utils-0.5.0-beta.0.tgz#8e375e0a01010e2172c3d78dd3401eae069c6075"
-  integrity sha512-yeBbvaxH5DGLuoABRfUPmXfFTYpiqIWCrxv45kiVe900GZgwb3i931a9pT0nhP30p9FB7JWyd6NomgAG5HgQnw==
+"@fuelrats/argument-validator-utils@^1.0.0-beta.0":
+  version "1.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/argument-validator-utils/-/argument-validator-utils-1.0.0-beta.0.tgz#6a6378ff40eacba94517dc41e4f775083f949586"
+  integrity sha512-lUYMZNAfxJi4QChrCd121RqYazR3WbwE2HRMecndpRXjFVubLw7//r5YYjpJw16ViV2k3sH7UTX6QgQfZDof7Q==
 
-"@fuelrats/eslint-config-react@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-2.0.0.tgz#a95001a4ac04f9d9cbbab90d19c86ca6153c800e"
-  integrity sha512-tPolYxgr4uhkgvSh0X/SizNTJrc9ZIJykSi49IXC3fYVvuu9TWLxbtiujeuo95NC6hsXJTOi3rCggiEMNohCUA==
+"@fuelrats/eslint-config-react@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-2.1.0.tgz#094a5875bf29f6890408814b1a2f7a0e20f53048"
+  integrity sha512-f7P7D7BQwbiTM/0darQ48u1t58HLSGyksji8b5CT7ihdX6z5Q8/39RpvmTBHp5jH0rH+Jzj4zmbAN+pFo9INig==
 
-"@fuelrats/eslint-config@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-2.0.0.tgz#600aadb19a833bb6fe061f992883cb271db5b348"
-  integrity sha512-1FlR3KKSdpJJzxz0hrNwtQqDOcmLhUc5DArTTQThaz0wGnF//RKnHWYFnt2ftazyq50W1XDDotxfMBfvodlxZg==
+"@fuelrats/eslint-config@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-2.1.0.tgz#3faa8115580466e98892725704a5c6bdc21fdc19"
+  integrity sha512-Hpf4kaaXwCVJtVdZFUNr2elm7lzN6TEt0rwj1WXbhwcIuLg+fnKt3PoJCTXeuYZKLxLCMLSjBMLVQcBj6slJGQ==
   dependencies:
     eslint-restricted-globals "^0.2.0"
 
