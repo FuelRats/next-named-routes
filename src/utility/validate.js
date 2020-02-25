@@ -1,17 +1,20 @@
-/* eslint-disable newline-per-chained-call */
 import validate from '@fuelrats/argument-validator-utils'
+
+
+
 
 
 export const isDynamicRoute = (route) => {
   return typeof route === 'string' && /\/\[[^/]+?\](?=\/|$)/u.test(route)
 }
 
+
 export const validateRoute = (args) => {
   const validator = validate(args).forClass('Route')
 
-  validator.assert('name').toExist().toBeOfType('string')
+  validator.assert('name').toBeOfType('string')
   validator.forObject(args.name, 'Route') // Change identifier since `name` is validated
-  validator.assert('href').toExist().toBeOneOfType('string', 'function')
+  validator.assert('href').toBeOneOfType('string', 'function')
 
   return validator
 }
@@ -21,19 +24,28 @@ export const validateRouteHelper = (args) => {
 
   validator.assert('NextLink').toExist()
   validator.assert('NextRouter').toExist()
-  validator.assert('routeManifest').toBeOfType('object')
+  validator.assert('routeManifest').toBeOneOfType('object', 'undefined')
 
   return validator
 }
 
-export const validateResolveRoute = (args, Route) => {
-  const validator = validate(args).forFunc('resolveRoute')
-  validator.assert('route').toExist().or((value) => {
+
+export const validateResolveRoute = (args, routes) => {
+  const assertResolveRoute = validate(args).forFunc('resolveRoute')
+
+
+  const assertRoute = assertResolveRoute.assert('route')
+
+  assertRoute.toBeOneOfType('string', 'function')
+  assertRoute.or(() => {
     return [
-      value.toBeOneOfType('string', 'function'),
-      value.toBeInstanceOf(Route, 'Route'),
+      assertRoute.toBeKeyOf(routes, 'routes'),
+      assertRoute.toStartWith('/'),
+      assertRoute.toBeOfType('function'),
     ]
   })
 
-  return validator
+  assertResolveRoute.assert('params').toBeOneOfType('object', 'undefined')
+
+  return assertResolveRoute
 }
