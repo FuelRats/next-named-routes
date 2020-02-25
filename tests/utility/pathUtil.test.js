@@ -1,4 +1,4 @@
-import { AssertionError } from '@fuelrats/argument-validator-utils'
+import { ValidationError } from '@fuelrats/argument-validator-utils'
 import { compileRoute } from '../../src/utility/pathUtil'
 
 
@@ -78,19 +78,19 @@ describe('compileRoute', () => {
     test('a property required to compile the route is missing.', () => {
       expect(() => {
         compileRoute('/foo/[bar]', {})
-      }).toThrow(AssertionError)
+      }).toThrow(ValidationError)
     })
 
     test('a property consumed by a catchAll route is not an array of values.', () => {
       expect(() => {
         compileRoute('/foo/[...bar]', { bar: 'foobar' })
-      }).toThrow(AssertionError)
+      }).toThrow(ValidationError)
     })
 
     test('a property consumed by a dynamic route is a function.', () => {
       expect(() => {
         compileRoute('/foo/[bar]', { bar: () => {} })
-      }).toThrow(AssertionError)
+      }).toThrow(ValidationError)
     })
   })
 })
