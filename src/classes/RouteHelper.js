@@ -12,13 +12,14 @@ import {
 import Route from './Route'
 
 
-const wrapRouter = (target, resolveRoute) => {
-  const wrapMethod = (method) => {
-    return (route, params, ...restArgs) => {
-      const { href, as } = resolveRoute(route, params)
 
-      return target[method](href, as, ...restArgs)
-    }
+
+
+const wrapRouter = (target, resolveRoute) => {
+  const wrapMethod = (method) => (route, params, ...restArgs) => {
+    const { href, as } = resolveRoute(route, params).getRouteData(params)
+
+    return target[method](href, as, ...restArgs)
   }
 
   target.pushRoute = wrapMethod('push')
@@ -29,24 +30,20 @@ const wrapRouter = (target, resolveRoute) => {
 }
 
 
-const routes = (NextLink, NextRouter, routeManifest) => {
-  return new (class RouteHelper {
-    useRouter = () => {
-      return wrapRouter(NextRouter.useRouter(), this.resolveRoute)
-    }
 
-    withRouter = (Component) => {
-      return hoistNonReactStatics(
-        ({ children, ...props }) => {
-          return React.createElement(
-            Component,
-            { ...props, router: this.Router },
-            children,
-          )
-        },
+
+
+const routes = (NextLink, NextRouter, routeManifest) => new (class RouteHelper {
+    useRouter = () => wrapRouter(NextRouter.useRouter(), this.resolveRoute)
+
+    withRouter = (Component) => hoistNonReactStatics(
+      ({ children, ...props }) => React.createElement(
         Component,
-      )
-    }
+        { ...props, router: this.Router },
+        children,
+      ),
+      Component,
+    )
 
     Link = (props) => {
       const {
@@ -58,7 +55,7 @@ const routes = (NextLink, NextRouter, routeManifest) => {
       let routeData = {}
 
       if (route) {
-        routeData = this.resolveRoute(route, params)
+        routeData = this.resolveRoute(route).getRouteData(params)
       }
 
       return React.createElement(
@@ -100,17 +97,14 @@ const routes = (NextLink, NextRouter, routeManifest) => {
       return this
     }
 
-    resolveRoute (route, params) {
-      validateResolveRoute({ route, params })
+    resolveRoute (routeName) {
+      validateResolveRoute({ routeName }, this.routes)
 
-      if (this.routes[route]) {
-        return this.routes[route].getRouteData(params)
-      }
-
-      return (new Route('route', route)).getRouteData(params)
+      return this.routes[routeName]
+        ?? Object.values(this.routes).find((route) => route.href === routeName)
+        ?? new Route('route', routeName)
     }
-  })()
-}
+})()
 
 
 
