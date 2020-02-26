@@ -4,9 +4,7 @@ import validate from '@fuelrats/argument-validator-utils'
 
 
 
-export const isDynamicRoute = (route) => {
-  return typeof route === 'string' && /\/\[[^/]+?\](?=\/|$)/u.test(route)
-}
+export const isDynamicRoute = (route) => typeof route === 'string' && /\/\[[^/]+?\](?=\/|$)/u.test(route)
 
 
 export const validateRoute = (args) => {
@@ -34,16 +32,14 @@ export const validateResolveRoute = (args, routes) => {
   const assertResolveRoute = validate(args).forFunc('resolveRoute')
 
 
-  const assertRoute = assertResolveRoute.assert('route')
+  const assertRouteName = assertResolveRoute.assert('routeName')
 
-  assertRoute.toBeOneOfType('string', 'function')
-  assertRoute.or(() => {
-    return [
-      assertRoute.toBeKeyOf(routes, 'routes'),
-      assertRoute.toStartWith('/'),
-      assertRoute.toBeOfType('function'),
-    ]
-  })
+  assertRouteName.toBeOneOfType('string', 'function')
+  assertRouteName.or(() => [
+    assertRouteName.toBeKeyOf(routes, 'routes'),
+    assertRouteName.toStartWith('/'),
+    assertRouteName.toBeOfType('function'),
+  ])
 
   assertResolveRoute.assert('params').toBeOneOfType('object', 'undefined')
 

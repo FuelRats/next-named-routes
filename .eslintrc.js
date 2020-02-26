@@ -11,6 +11,7 @@ module.exports = {
   rules: {
     'jsdoc/require-jsdoc': ['off'],
     'react/prop-types': ['off'],
+    'arrow-body-style': ['error', 'as-needed', { requireReturnForObjectLiteral: true }],
   },
   overrides: [
     {
