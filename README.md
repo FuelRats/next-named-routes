@@ -15,18 +15,15 @@ Named route definitions for Next.js 9+ dynamic routes.
 ## Table of Contents
 
 - [Installation](#installation)
-- [Configuring `routes()`](#configuring-routes)
-  - [Defining routes with the `routeManifest` argument](#defining-routes-with-the-routemanifest-argument)
-  - [Defining routes with the `.setRoutes()` method](#defining-routes-with-the-setroutes-method)
-  - [Extending defined routes with the `.add()` method.](#extending-defined-routes-with-the-add-method)
-- [Using `<Link />`](#using-link-)
+- [Defining routes in your application](#defining-routes-in-your-application)
+  - [Function routes](#function-routes)
+- [Using `<Link />` in your code](#using-link--in-your-code)
   - [`route` as a defined route name](#route-as-a-defined-route-name)
   - [`route` as a file path](#route-as-a-file-path)
   - [Handling parameters](#handling-parameters)
   - [`<Link />` is just a wrapped `next/link`](#link--is-just-a-wrapped-nextlink)
 - [Using `Router`](#using-router)
-  - [Example](#example)
-- [Migrating from `next-routes`](#migrating-from-next-routesnext-routes)
+- [Migrating from `next-routes`](#migrating-from-next-routes)
   - [Differences from `next-routes`](#differences-from-next-routes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
