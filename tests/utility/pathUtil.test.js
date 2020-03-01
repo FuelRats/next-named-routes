@@ -1,17 +1,17 @@
 import { ValidationError } from '@fuelrats/argument-validator-utils'
-import { compileRoute } from '../../src/utility/pathUtil'
+import { getRouteCompiler } from '../../src/utility/pathUtil'
 
 
 
 
 
-describe('compileRoute', () => {
+describe('getRouteCompiler', () => {
   let href = null
   let params = null
   let result = null
 
   beforeEach(() => {
-    result = compileRoute(href, params)
+    result = getRouteCompiler(href)(params)
   })
 
   describe('when given a simple dynamic route and it\'s sole parameter', () => {
@@ -74,23 +74,23 @@ describe('compileRoute', () => {
     })
   })
 
-  describe('will throw an error when', () => {
+  describe('will throw when', () => {
     test('a property required to compile the route is missing.', () => {
       expect(() => {
-        compileRoute('/foo/[bar]', {})
-      }).toThrow(ValidationError)
+        getRouteCompiler('/foo/[bar]')({})
+      }).toThrowWithMessage(ValidationError, 'Expected argument `bar` of Route `/foo/[bar]` to exist, but got `undefined` instead.')
     })
 
     test('a property consumed by a catchAll route is not an array of values.', () => {
       expect(() => {
-        compileRoute('/foo/[...bar]', { bar: 'foobar' })
-      }).toThrow(ValidationError)
+        getRouteCompiler('/foo/[...bar]')({ bar: 'foobar' })
+      }).toThrowWithMessage(ValidationError, 'Expected argument `bar` of Route `/foo/[...bar]` to be of type `array`, but got `string` instead.')
     })
 
     test('a property consumed by a dynamic route is a function.', () => {
       expect(() => {
-        compileRoute('/foo/[bar]', { bar: () => {} })
-      }).toThrow(ValidationError)
+        getRouteCompiler('/foo/[bar]')({ bar: () => {} })
+      }).toThrowWithMessage(ValidationError, 'Expected argument `bar` of Route `/foo/[bar]` to not be of type `function`, but got `function` instead.')
     })
   })
 })
