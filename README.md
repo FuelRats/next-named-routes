@@ -51,7 +51,7 @@ import routes from '@fuelrats/next-named-routes'
 const { Link, Router, useRouter, withRouter } = routes(NextLink, NextRouter)
   .add('about', '/about-us') // define your routes
   .add('profile', '/profile/[tab]')
-  .add('blog post', '/blog/[...blogPath]')
+  .add('cms', '/cms/[...cmsPath]')
 
 
 // export what you need
@@ -68,51 +68,49 @@ export { Link, Router, useRouter, withRouter }
 
 In large applications routes can get long and complex. You can use the `.add()` function to alias your routes into simple names.
 
-Route definitions are completely optional. If you prefer using href 
+Route definitions are completely optional. You can use a normal `href` value to refer to your page without issue!
 
-`.add()` accepts two arguments:
-* **`name`** - The name of your route, which can be used to refer back to the given path.
-* **`href`** - The path inside `pages` directory. Identical to `href` used in `next/link` and `next/router`.
-
-If successful, it will return the current instance of `routes()` so you may chain route definitions together.
-
-See [Using `<Link />`](#using-link-) and [Using `Router`](#using-router) below for more details on using defined routes.
-
-### Static routes
-
-A basic route looks like this:
+to use `.add()`, just tag the function onto the end of your `routes()` call:
 
 ```javascript
 const { /* ... */ } = routes(NextLink, NextRouter)
-  .add('static route', '/path/to/page')
+  .add(name, href)
 ```
 
+`.add()` accepts two arguments:
+* **`name`** - The name of your route. This will be used to refer back to the given path. Can be a string or symbol.
+* **`href`** - The path inside your `pages` directory. Identical to `href` used in `next/link` and `next/router`. Also accepts a [function](#function-routes).
 
-### Dynamic routes
+If successful, it will return the current instance of `routes()` so you can chain route definitions together.
 
-Dynamic routes are defined just like static routes. If you're unfamiliar with dynamic routes, you should first learn about their concepts [here][nextdocs-dynamic-routes]
-
-```javascript
-
-.add('blog post', '/blog/[year]/[month]/[day]/[slug]')
-
-```
+See [Using `<Link />`](#using-link-) and [Using `Router`](#using-router) below for more details on using defined routes.
 
 
 ### Function routes
 
 `.add()` also accepts a callback for ultimate control over how your route definition behaves. This is good for when you want to process objects into path slugs, or if you want to control what page the route leads to based upon the value of a parameter.
 
+The callback is passed a single parameter:
+
+* **`params`** - object given to `<Link />` or `Router` call
+
+and is expected to return an object with the following properties:
+
+* **`href`** - The path inside your `pages` directory.
+* **`as`** - The path that will be rendered in the browser URL bar.
+* **`query`** - object of parameters to be transformed into a query string (optional)
+
 ```javascript
-.add('function route', ({ publishDate, slug, ...query }) => {
+const { /* ... */ } = routes(NextLink, NextRouter)
+.add('forum post', ({ publishDate, slug, ...query }) => {
   const year = publishDate.getUTCFullYear()
   const month = publishDate.getUTCMonth()
   const day = publishDate.getUTCDate()
 
   return {
-    href: '/blog/[year]/[month]/[day]/[slug]',
-    as: `/blog/${year}/${month}/${day}/${slug}`,
-    query, // pass back what params you don't use as query so the overflow will be turned into a query string.
+    href: '/forum/[year]/[month]/[day]/[slug]',
+    as: `/forum/${year}/${month}/${day}/${slug}`,
+    query,
   }
 })
 ```
@@ -120,21 +118,30 @@ Dynamic routes are defined just like static routes. If you're unfamiliar with dy
 Another example:
 
 ```javascript
-.add('blog list' ({ page, ...query }) => {
-  let href = '/blog'
-  let as = '/blog'
+.add('forum list', ({ category, page, ...query }) => {
+  let href = '/forum'
+  let as = '/forum'
 
-  if (page) {
-    href += '/page/[page]'
-    as += `/page/${page}`
+  if (category) {
+    href += '/cat/[category]'
+    href += `/cat/${category}`
+
+    if (page) {
+      href += '/[page]'
+      as += `/${page}`
+    }
   }
+
 
   return { href, as, query }
 })
 ```
 
 
-## Using `<Link />` and `Router` in your code
+
+
+
+## Using `<Link />` in your code
 
 The provided `<Link />` component lets you reference defined routes by their names and generate the final URL via parameters.
 
@@ -146,31 +153,53 @@ import { Link } from '../routes'
 
 const Nav = () => (
   <div>
-    {/* Equivalent to: <Link href="/path/to/page" /> */}
-    <Link route="static route">
-      <a>Static Link</a>
+    {/*
+      * Equivalent to:
+      * <Link
+      *   href="/forums" />
+      */}
+    <Link route="forum list">
+      <a>forums</a>
     </Link>
 
-    {/* Equivalent to: <Link href="/blog/[year]/[month]/[day]/[slug]" as="/blog/2015/06/01/cool-post" /> */}
-    <Link route="blog post" params={{ year: '2015', month: '06', day: '01', slug: 'cool-post' }}>
-      <a>Dynamic Route Link</a>
+    {/*
+      * Equivalent to:
+      * <Link
+      *   href="/forums/[year]/[month]/[day]/[slug]"
+      *   as="/forums/2015/06/01/out-of-fuel-explorer-rescue-service-the-fuel-rats" />
+      */}
+    <Link route="forum post" params={{ year: '2015', month: '06', day: '01', slug: 'out-of-fuel-explorer-rescue-service-the-fuel-rats' }}>
+      <a>Forum post</a>
     </Link>
 
-    {/* Equivalent to: <Link href="/dynamic/[...catchAll]" as="/dynamic/foo/bar/baz" /> */}
-    <Link route="route:catchAll" params{{ catchAll: [ 'foo', 'bar', 'baz' ] }}>
-        <a>CatchAll Dynamic Route Link</a>
-    </div>
+    {/*
+      * Equivalent to:
+      * <Link
+      *   href="/cms/[...cmsPath]"
+      *   as="/cms/legal/terms-of-service" />
+      */}
+    <Link route="cms" params{{ cmsPath: [ 'legal', 'terms-of-service' ] }}>
+        <a>Terms of Service</a>
+    </link>
+  </div>
+)
 )
 ```
 
 
 ### `route` as a file path
 
-You can also define your route as a file path like you would for the `href` prop. This path **DOES NOT** need to be defined `routes.js`.
+You can also refer to routes not defined in `routes.js` by using page's path in your `pages` directory.
 
 ```javascript
-    <Link route="/dynamic/route/[foo]" params={{ foo: 'bar' }}>
-      <a>Dynamic Route Link</a>
+    {/*
+      * Equivalent to:
+      * <Link
+      *   href="/profile/[tab]"
+      *   as="/profile/overview" />
+      */}
+    <Link route="/profile/[tab]" params={{ tab: 'overview' }}>
+      <a>Your Profile</a>
     </Link>
 ```
 
@@ -181,29 +210,34 @@ The route compiler is smart about what parameters are used by your dynamic route
 
 Unused parameters will be passed as a querystring to your page.
 ```javascript
-    {/* Equivalent to: <Link href="/dynamic/route/[foo]?r2=d2" as="/dynamic/route/bar?r2=d2" /> */}
-    <Link route="/dynamic/route/[foo]" params={{ foo: 'bar', r2: 'd2' }}>
-      <a>Dynamic Route Link</a>
+    {/*
+      * Equivalent to:
+      * <Link
+      *   href="/profile/[tab]?welcome=true"
+      *   as="/profile/overview?welcome=true" />
+      */}
+    <Link route="/profile/[tab]" params={{ tab: 'overview', welcome: true }}>
+      <a>Your Profile</a>
     </Link>
 ```
 
 Missing parameters will cause an error.
 ```javascript
-    {/* ERROR! "bar" is required */}
-    <Link route="/dynamic/route/[foo]" params={{ r2: 'd2' }}>
-      <a>Dynamic Route Link</a>
+    {/* ERROR! "tab" is required */}
+    <Link route="/profile/[tab]" params={{ welcome: true }}>
+      <a>Your Profile</a>
     </Link>
 ```
 
 
 ### `<Link />` is just a wrapped `next/link`
 
-`<Link />` also accepts all other props `next/link` accepts. Using `route` and `params` will, however, take priority over `href` and `as`.
+`<Link />` also accepts all other props `next/link` accepts. Using `route` and `params` will take priority over `href` and `as`, however.
 
 
 
 
-
+ however,
 ## Using `Router`
 
 The `Router` object ia a modified `next/router` with three additional functions.
@@ -220,26 +254,14 @@ import Router from '../routes'
 Router.pushRoute(route, params, options)
 ```
 
-* **`route`** - The defined route name or route to navigate to.
-* **`params`** - Parameters to be passed to the page via dynamic routing and query string.
+* **`route`** - Defined route name or a path in your `pages` directory.
+* **`params`** - Parameters passed to your page.
 * **`options`** - `next/router` options object.
-
-`route` and `params` arguments accept the same values as the `<Link />` props above.
-
-### Example
-
-```javascript
-import Router from '../routes'
+ however,
+`route` and `params` arguments accept the same values as the corresponding `<Link />` props above.
 
 
-// This pushRoute call:
 
-Router.pushRoute('route:dynamic', { foo: 'bar' })
-
-// Is the same as this push call:
-
-Router.push('/dynamic/route/[foo]', '/dynamic/route/bar')
-```
 
 
 ## Migrating from `next-routes`
@@ -261,8 +283,10 @@ This library is **NOT** a simple drop-in replacement for `next-routes`. Some wor
 * For compatibility with the upcoming Yarn 2, `next-named-routes` does not attempt to load `NextLink` and `NextRouter` directly. Instead, `NextLink` and all exports of `NextRouter` must be manually provided to `next-named-routes`. You can see this in the example config above.
 
 
+---
 
+Brought to you by [The Fuel Rats!][fuelrats] ⛽🐀
 
-
+[fuelrats]: https://fuelrats.com/
 [next-routes]: https://github.com/fridays/next-routes
 [nextdocs-dynamic-routes]: https://nextjs.org/docs/routing/dynamic-routes
