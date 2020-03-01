@@ -1,5 +1,5 @@
-import { compileRoute } from '../utility/pathUtil'
-import { isDynamicRoute, validateRoute } from '../utility/validate'
+import { getRouteCompiler } from '../utility/pathUtil'
+import { isDynamicRoute, validateRoute, validateRouteData } from '../utility/validate'
 
 
 
@@ -10,28 +10,33 @@ export default class Route {
     validateRoute({ name, href })
     this.name = name
     this.href = href
+
+    if (isDynamicRoute(href)) {
+      this.compileFromParams = getRouteCompiler(href)
+    } else if (typeof href === 'function') {
+      this.compileFromParams = this.href
+    }
   }
 
   getRouteData (params = {}) {
-    let { href } = this
-    let as = undefined
-    let query = undefined
+    let response = { href: this.href }
+    let query = null
 
-    if (typeof href === 'function') {
-      ({ href, as, query } = href(params))
-    } else if (isDynamicRoute(href)) {
-      ({ href, as, query } = compileRoute(href, params))
+    if (this.compileFromParams) {
+      ({ query, ...response } = this.compileFromParams(params))
     } else {
       query = { ...params }
     }
 
+    validateRouteData(response, this.name)
+
     if (query) {
-      href = { pathname: href, query }
-      if (as) {
-        as = { pathname: as, query }
+      response.href = { pathname: response.href, query }
+      if (response.as) {
+        response.as = { pathname: response.as, query }
       }
     }
 
-    return { href, as }
+    return response
   }
 }

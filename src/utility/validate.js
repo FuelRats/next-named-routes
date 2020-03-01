@@ -10,7 +10,7 @@ export const isDynamicRoute = (route) => typeof route === 'string' && /\/\[[^/]+
 export const validateRoute = (args) => {
   const validator = validate(args).forClass('Route')
 
-  validator.assert('name').toBeOfType('string')
+  validator.assert('name').toBeOneOfType('string', 'symbol')
   validator.forObject(args.name, 'Route') // Change identifier since `name` is validated
   validator.assert('href').toBeOneOfType('string', 'function')
 
@@ -25,6 +25,15 @@ export const validateRouteHelper = (args) => {
   validator.assert('routeManifest').toBeOneOfType('object', 'undefined')
 
   return validator
+}
+
+
+export const validateRouteData = (routeData, routeName) => {
+  const routeDataValidator = validate(routeData).forObject(routeName, 'route data for Route')
+  routeDataValidator.assert('href').toBeOfType('string')
+  routeDataValidator.assert('as').toBeOneOfType('string', 'undefined')
+
+  return routeDataValidator
 }
 
 

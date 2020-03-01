@@ -15,7 +15,7 @@ const stringifyForPath = (value) => {
   return value
 }
 
-export const compileRoute = (href, params) => {
+export const getRouteCompiler = (href) => (params) => {
   const validator = validate(params).forObject(href, 'Route')
 
   const asSegments = href.split('/')
