@@ -28,6 +28,15 @@ export const validateRouteHelper = (args) => {
 }
 
 
+export const validateRouteData = (routeData, routeName) => {
+  const routeDataValidator = validate(routeData).forObject(routeName, 'route data for Route')
+  routeDataValidator.assert('href').toBeOfType('string')
+  routeDataValidator.assert('as').toBeOneOfType('string', 'undefined')
+
+  return routeDataValidator
+}
+
+
 export const validateResolveRoute = (args, routes) => {
   const assertResolveRoute = validate(args).forFunc('resolveRoute')
 
