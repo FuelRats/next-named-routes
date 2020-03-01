@@ -1,3 +1,4 @@
+import { ValidationError } from '@fuelrats/argument-validator-utils'
 import Route from '../../src/classes/Route'
 
 
@@ -24,9 +25,10 @@ describe('Route', () => {
   let href = null
   let route = null
 
-  beforeEach(() => {
-    route = new Route(name, href)
-  })
+  const setupRoute = (_name = name, _href = href) => {
+    route = new Route(_name, _href)
+  }
+  beforeEach(setupRoute)
 
   describe('when provided a basic name and href', () => {
     beforeAll(() => {
@@ -77,6 +79,32 @@ describe('Route', () => {
 
       expect(routeData.href).toEqual(dynamicRouteHrefShape)
       expect(routeData.as).toEqual(dynamicRouteAsShape)
+    })
+
+    test('will throw when function returns invalid href', () => {
+      setupRoute(undefined, () => {
+        return {
+          href: () => {},
+          as: 'herp',
+        }
+      })
+
+      expect(() => {
+        route.getRouteData({})
+      }).toThrowWithMessage(ValidationError, 'Expected argument `href` of route data for Route `route` to be of type `string`, but got `function` instead.')
+    })
+
+    test('will throw when function returns invalid as', () => {
+      setupRoute(undefined, () => {
+        return {
+          href: '/hello',
+          as: () => {},
+        }
+      })
+
+      expect(() => {
+        route.getRouteData({})
+      }).toThrowWithMessage(ValidationError, 'Expected argument `as` of route data for Route `route` to be one of type [ `string`, `undefined` ], but got `function` instead.')
     })
   })
 })
