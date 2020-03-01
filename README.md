@@ -17,11 +17,10 @@ Named route definitions for Next.js 9+ dynamic routes.
 - [Installation](#installation)
 - [Defining routes in your application](#defining-routes-in-your-application)
   - [Function routes](#function-routes)
-- [Using `<Link />` in your code](#using-link--in-your-code)
+- [Using `<Link />`](#using-link-)
   - [`route` as a defined route name](#route-as-a-defined-route-name)
   - [`route` as a file path](#route-as-a-file-path)
   - [Handling parameters](#handling-parameters)
-  - [`<Link />` is just a wrapped `next/link`](#link--is-just-a-wrapped-nextlink)
 - [Using `Router`](#using-router)
 - [Migrating from `next-routes`](#migrating-from-next-routes)
   - [Differences from `next-routes`](#differences-from-next-routes)
@@ -138,10 +137,13 @@ Another example:
 
 
 
-## Using `<Link />` in your code
+## Using `<Link />`
 
-The provided `<Link />` component lets you reference defined routes by their names and generate the final URL via parameters.
+The provided `<Link />` component is a wrapped `next/link` which lets you reference defined routes by their names, and generate the final URL via parameters.
 
+* **`route`** - Defined route name or a path in your `pages` directory.
+* **`params`** - Parameters used to generate the URL and query string.
+* All other props of [`next/link`][nextdocs-link], however `href` and `as` are overwritten by `route` if it's defined.
 
 ### `route` as a defined route name
 
@@ -227,14 +229,9 @@ Missing parameters will cause an error.
 ```
 
 
-### `<Link />` is just a wrapped `next/link`
-
-`<Link />` also accepts all other props `next/link` accepts. Using `route` and `params` will take priority over `href` and `as`, however.
 
 
 
-
- however,
 ## Using `Router`
 
 The `Router` object ia a modified `next/router` with three additional functions.
@@ -252,9 +249,9 @@ Router.pushRoute(route, params, options)
 ```
 
 * **`route`** - Defined route name or a path in your `pages` directory.
-* **`params`** - Parameters passed to your page.
+* **`params`** - Parameters used to generate the URL and query string.
 * **`options`** - `next/router` options object.
- however,
+
 `route` and `params` arguments accept the same values as the corresponding `<Link />` props above.
 
 
@@ -287,3 +284,4 @@ Brought to you by [The Fuel Rats!][fuelrats] ⛽🐀
 [fuelrats]: https://fuelrats.com/
 [next-routes]: https://github.com/fridays/next-routes
 [nextdocs-dynamic-routes]: https://nextjs.org/docs/routing/dynamic-routes
+[nextdocs-link]: https://nextjs.org/docs/api-reference/next/link
