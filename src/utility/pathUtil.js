@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */// C style loop for performance
-import validate from '@fuelrats/argument-validator-utils'
+import { makeAssertForRoute } from './validate'
 
 
 
@@ -16,7 +16,7 @@ const stringifyForPath = (value) => {
 }
 
 export const getRouteCompiler = (href) => (params) => {
-  const validator = validate(params).forObject(href, 'Route')
+  const assertForRoute = makeAssertForRoute(href)
 
   const asSegments = href.split('/')
   const query = { ...params }
@@ -26,13 +26,13 @@ export const getRouteCompiler = (href) => (params) => {
 
     if (isDynamicSegment) {
       const paramValue = query[paramName]
-      const assertCurrentParam = validator.assert(paramName).toExist()
+      const assertParam = assertForRoute(paramValue, paramName).toExist()
 
       if (isCatchAll) {
-        assertCurrentParam.toBeOfType('array')
+        assertParam.toBeOfType('array')
         asSegments[segIndex] = paramValue.map(stringifyForPath).join('/')
       } else {
-        assertCurrentParam.not.toBeOfType('function')
+        assertParam.not.toBeOfType('function')
         asSegments[segIndex] = stringifyForPath(paramValue)
       }
 

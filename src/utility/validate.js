@@ -1,4 +1,4 @@
-import validate from '@fuelrats/argument-validator-utils'
+import validate, { assert } from '@fuelrats/argument-validator-utils'
 
 
 
@@ -35,6 +35,9 @@ export const validateRouteData = (routeData, routeName) => {
 
   return routeDataValidator
 }
+
+
+export const makeAssertForRoute = (route) => (value, name) => assert(value, name, route, 'Route')
 
 
 export const validateResolveRoute = (args, routes) => {
