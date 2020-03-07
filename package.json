@@ -1,6 +1,6 @@
 {
   "name": "@fuelrats/next-named-routes",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0-beta.3",
   "description": "Named routes API for Next.js dynamic routing",
   "main": "dist/index.js",
   "repository": {
@@ -19,7 +19,7 @@
     "test:watch": "yarn test --watchAll",
     "updatetoc": "doctoc README.md",
     "build": "rm -rf dist && yarn rollup --config",
-    "prepublish": "yarn updatetoc && yarn build"
+    "prepublish": "yarn test && yarn build && yarn updatetoc"
   },
   "bugs": {
     "url": "https://github.com/FuelRats/next-named-routes/issues"
@@ -52,18 +52,18 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsdoc": "^22.0.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "jest": "^25.1.0",
     "jest-extended": "^0.11.5",
     "next": "^9.2.2",
     "react-dom": "^16.13.0",
-    "rollup": "^1.32.0",
+    "rollup": "^1.32.1",
     "rollup-plugin-auto-external": "^2.0.0",
-    "rollup-plugin-babel": "^4.3.3"
+    "rollup-plugin-babel": "^4.4.0"
   },
   "dependencies": {
-    "@fuelrats/argument-validator-utils": "^1.0.0",
+    "@fuelrats/argument-validator-utils": "^1.0.1",
     "hoist-non-react-statics": "^3.3.2",
     "react": "^16.13.0"
   }
