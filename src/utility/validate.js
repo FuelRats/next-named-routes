@@ -37,7 +37,7 @@ export const validateRouteData = (routeData, routeName) => {
 }
 
 
-export const makeAssertForRoute = (route) => (value, name) => assert(value, name, route, 'Route')
+export const makeAssertForRoute = (route) => (name, value) => assert(name, value, route, 'Route')
 
 
 export const validateResolveRoute = (args, routes) => {

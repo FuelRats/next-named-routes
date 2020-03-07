@@ -26,7 +26,7 @@ export const getRouteCompiler = (href) => (params) => {
 
     if (isDynamicSegment) {
       const paramValue = query[paramName]
-      const assertParam = assertForRoute(paramValue, paramName).toExist()
+      const assertParam = assertForRoute(paramName, paramValue).toExist()
 
       if (isCatchAll) {
         assertParam.toBeOfType('array')
