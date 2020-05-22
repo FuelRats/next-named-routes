@@ -1,6 +1,13 @@
 # Changelog
 
 ## [unreleased]
+* Remove requirement to provide next.js
+* Fix withRouter wrapper
+
+## 3.0.0 - 2020-03-08
+* rewrite route definition API so it's considerably more approachable.
+* Automatically generate asPath from the route URL given.
+* Add tests
 
 ## 2.2.0 - 2020-01-26
 * Use updated validator lib.
