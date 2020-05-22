@@ -21,7 +21,7 @@ const testRoutes = {
 
 
 
-const setupRoutes = (routeManifest = testRoutes) => getRouteHelper(NextLink, NextRouter, routeManifest)
+const setupRoutes = (routeManifest = testRoutes) => getRouteHelper(NextLink, NextRouter).setRoutes(routeManifest)
 
 const routes = setupRoutes()
 
