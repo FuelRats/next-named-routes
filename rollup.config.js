@@ -6,8 +6,6 @@ import babel from 'rollup-plugin-babel'
 
 
 
-
-
 const config = {
   input: path.resolve(__dirname, 'src', 'index.js'),
   output: {
@@ -15,7 +13,15 @@ const config = {
     file: path.resolve(__dirname, 'dist', 'index.js'),
     format: 'cjs',
   },
-  plugins: [autoExternal(), resolve(), babel()],
+  external: [
+    'next/link',
+    'next/router',
+  ],
+  plugins: [
+    autoExternal(),
+    resolve(),
+    babel(),
+  ],
 }
 
 
