@@ -1,6 +1,6 @@
 {
   "name": "@fuelrats/next-named-routes",
-  "version": "3.0.0",
+  "version": "3.1.0-canary.0",
   "description": "Named routes API for Next.js dynamic routing",
   "main": "dist/index.js",
   "repository": {
@@ -32,39 +32,40 @@
   ],
   "license": "BSD-3-Clause",
   "peerDependencies": {
+    "next": "^9.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
+    "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-env": "^7.9.6",
     "@fuelrats/eslint-config": "^2.1.0",
     "@fuelrats/eslint-config-react": "^2.1.0",
-    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-node-resolve": "^8.0.0",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^25.1.0",
+    "babel-jest": "^26.0.1",
     "doctoc": "^1.4.0",
-    "eslint": "^6.8.0",
+    "eslint": "^7.0.0",
     "eslint-import-resolver-node": "^0.3.3",
     "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jsdoc": "^22.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsdoc": "^25.4.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^2.5.0",
-    "jest": "^25.1.0",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.2",
+    "jest": "^26.0.1",
     "jest-extended": "^0.11.5",
-    "next": "^9.2.2",
-    "react-dom": "^16.13.0",
-    "rollup": "^1.32.1",
+    "next": "^9.4.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rollup": "^2.10.7",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-babel": "^4.4.0"
   },
   "dependencies": {
     "@fuelrats/argument-validator-utils": "^1.0.1",
-    "hoist-non-react-statics": "^3.3.2",
-    "react": "^16.13.0"
+    "hoist-non-react-statics": "^3.3.2"
   }
 }
