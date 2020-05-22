@@ -22,6 +22,7 @@ Named route definitions for Next.js 9+ dynamic routes.
   - [`route` as a file path](#route-as-a-file-path)
   - [Handling parameters](#handling-parameters)
 - [Using `Router`](#using-router)
+- [Providing a Custom `Link` and `Router`](#providing-a-custom-link-and-router)
 - [Migrating from `next-routes`](#migrating-from-next-routes)
   - [Differences from `next-routes`](#differences-from-next-routes)
 
@@ -38,13 +39,11 @@ Named route definitions for Next.js 9+ dynamic routes.
 3. Create a `routes.js` file in your project similar to this:
 
 ```javascript
-import NextLink from 'next/link'
-import * as NextRouter from 'next/router'
 import routes from '@fuelrats/next-named-routes'
 
 
 // Destructure what you need
-const { Link, Router, useRouter, withRouter } = routes(NextLink, NextRouter)
+const { Link, Router, useRouter, withRouter } = routes()
   .add('about', '/about-us') // define your routes
   .add('profile', '/profile/[tab]')
   .add('cms', '/cms/[...cmsPath]')
@@ -69,7 +68,7 @@ Route definitions are completely optional. You can use a normal `href` value to 
 to use `.add()`, just tag the function onto the end of your `routes()` call:
 
 ```javascript
-const { /* ... */ } = routes(NextLink, NextRouter)
+const { /* ... */ } = routes()
   .add(name, href)
 ```
 
@@ -97,7 +96,7 @@ and is expected to return an object with the following properties:
 * **`query`** - object of parameters to be transformed into a query string (optional)
 
 ```javascript
-const { /* ... */ } = routes(NextLink, NextRouter)
+const { /* ... */ } = routes()
 .add('forum post', ({ publishDate, slug, ...query }) => {
   const year = publishDate.getUTCFullYear()
   const month = publishDate.getUTCMonth()
@@ -255,8 +254,25 @@ Router.pushRoute(route, params, options)
 `route` and `params` arguments accept the same values as the corresponding `<Link />` props above.
 
 
+## Providing a Custom `Link` and `Router`
+
+You can provide your own `Link` and `Router` instances if you wish to extend functionality futher, however there is one major caveat. the `Router` object **MUST** be an object which provides both the main Router API object and the `useRouter()` hook.
 
 
+Pass `Link` and `Router` to routes like the following:
+
+```javascript
+const RouterObj = {
+  default: CustomRouter
+  useRouter: customRouterHook
+}
+
+const {Link, Router} = routes(CustomLink, RouterObj)
+```
+
+While inconvienent, we require both of these things to be able to provide the wrapped `useRouter()` hook and `withRouter()` HoC.
+
+The custom `Router` is **NOT** required to pass a custom `Link` component. One can exist without the other.
 
 ## Migrating from `next-routes`
 
@@ -269,12 +285,12 @@ This library is **NOT** a simple drop-in replacement for `next-routes`. Some wor
     - If you only implemented a custom server for dynamic routing, chances are you could remove it altogether!
 3. remove `next-routes` via `yarn remove next-routes` or `npm r -S next-routes`
 
+
 ### Differences from `next-routes`
 * Arguments for `routes.add()` differs significantly from `next-routes`. For more information see the [Configuring `routes()`](#configuring-routes) section above.
     * `name` is now required.
     * `pattern`, which we call `href`, is a `Next.js` dynamic route path instead of a `path-to-regexp` pattern.
     * `page`, or the path to the page file, is no longer needed as the file system will always reflect the `href` value.
-* For compatibility with the upcoming Yarn 2, `next-named-routes` does not attempt to load `NextLink` and `NextRouter` directly. Instead, `NextLink` and all exports of `NextRouter` must be manually provided to `next-named-routes`. You can see this in the example config above.
 
 
 ---
