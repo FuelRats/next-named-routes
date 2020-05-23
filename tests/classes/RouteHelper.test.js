@@ -39,6 +39,17 @@ describe('RouteHelper', () => {
     })
   })
 
+  describe('.add()', () => {
+    test('will create a new route ', () => {
+      const routeKey = 'route:static'
+
+      const routeObj = getRouteHelper()
+        .add(routeKey, '/home')
+
+      expect(routeObj.routes).toHaveProperty(routeKey)
+    })
+  })
+
   describe('.resolveRoute()', () => {
     test('will resolve defined route by name', () => {
       const name = 'route:function'
