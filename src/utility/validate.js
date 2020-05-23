@@ -22,7 +22,6 @@ export const validateRouteHelper = (args) => {
 
   validator.assert('NextLink').toExist()
   validator.assert('NextRouter').toExist()
-  validator.assert('routeManifest').toBeOneOfType('object', 'undefined')
 
   return validator
 }

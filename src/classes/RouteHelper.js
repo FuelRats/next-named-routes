@@ -1,4 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import hoistNonReactStatics from 'hoist-non-react-statics'
+import NextLinkDefault from 'next/link'
+import * as NextRouterDefault from 'next/router'
 import React from 'react'
 
 
@@ -33,15 +36,25 @@ const wrapRouter = (target, resolveRoute) => {
 
 
 
-const routes = (NextLink, NextRouter, routeManifest) => new (class RouteHelper {
+const routes = (NextLink = NextLinkDefault, NextRouter = NextRouterDefault) => new (class RouteHelper {
+  routes = {}
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks -- useRouter is not used in a class context at runtime.
   useRouter = () => wrapRouter(NextRouter.useRouter(), this.resolveRoute.bind(this))
 
   withRouter = (Component) => hoistNonReactStatics(
-    ({ children, ...props }) => React.createElement(
-      Component,
-      { ...props, router: this.Router },
-      children,
-    ),
+    ({ children, ...props }) => {
+      const router = this.useRouter()
+
+      return React.createElement(
+        Component,
+        {
+          ...props,
+          router,
+        },
+        children,
+      )
+    },
     Component,
   )
 
@@ -71,8 +84,7 @@ const routes = (NextLink, NextRouter, routeManifest) => new (class RouteHelper {
   Router = wrapRouter(NextRouter.default, this.resolveRoute.bind(this))
 
   constructor () {
-    validateRouteHelper({ NextLink, NextRouter, routeManifest })
-    this.setRoutes(routeManifest)
+    validateRouteHelper({ NextLink, NextRouter })
   }
 
   add (name, href) {
