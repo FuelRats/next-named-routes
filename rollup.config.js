@@ -3,6 +3,9 @@ import resolve from '@rollup/plugin-node-resolve'
 import path from 'path'
 import autoExternal from 'rollup-plugin-auto-external'
 import babel from 'rollup-plugin-babel'
+import { uglify } from 'rollup-plugin-uglify'
+
+
 
 
 
@@ -21,6 +24,7 @@ const config = {
     autoExternal(),
     resolve(),
     babel(),
+    uglify(),
   ],
 }
 
