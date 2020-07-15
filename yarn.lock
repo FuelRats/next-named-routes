@@ -1205,11 +1205,6 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@fuelrats/argument-validator-utils@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@fuelrats/argument-validator-utils/-/argument-validator-utils-1.0.1.tgz#87fa9ccd7fc8b6bcbcd54b81eb29131770fb5728"
-  integrity sha512-UKUE4JvtjR7vQxcZPWfMfzvEHkkSqOJgCJ9o4563KwWeuuFnJ72fL1AYb7UatbNEmgXRUq938rSL0Du8OLyRCA==
-
 "@fuelrats/eslint-config-react@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-2.1.0.tgz#094a5875bf29f6890408814b1a2f7a0e20f53048"
@@ -1221,6 +1216,11 @@
   integrity sha512-Hpf4kaaXwCVJtVdZFUNr2elm7lzN6TEt0rwj1WXbhwcIuLg+fnKt3PoJCTXeuYZKLxLCMLSjBMLVQcBj6slJGQ==
   dependencies:
     eslint-restricted-globals "^0.2.0"
+
+"@fuelrats/validation-util@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@fuelrats/validation-util/-/validation-util-1.1.2.tgz#cda434bc92c292b681dad8d29840ecf2152dd399"
+  integrity sha512-sqobLeQO3yMGnIh2k1jRM7/zL28h/vDLQMJwHRyb37FnrWtnkLIJ5IhquqIFynHZtLxNi6qsQyKSHnz3QOrCLA==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.0.0"

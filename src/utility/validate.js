@@ -1,4 +1,4 @@
-import validate, { assert } from '@fuelrats/argument-validator-utils'
+import validate, { assert } from '@fuelrats/validation-util'
 
 
 

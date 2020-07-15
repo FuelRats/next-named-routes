@@ -1,4 +1,4 @@
-import { ValidationError } from '@fuelrats/argument-validator-utils'
+import { ValidationError } from '@fuelrats/validation-util'
 import NextLink from 'next/link'
 import * as NextRouter from 'next/router'
 

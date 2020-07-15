@@ -1,4 +1,4 @@
-import { ValidationError } from '@fuelrats/argument-validator-utils'
+import { ValidationError } from '@fuelrats/validation-util'
 import Route from '../../src/classes/Route'
 
 
